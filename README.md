@@ -10,7 +10,7 @@ To install, just put the files on a webserver page access
 * Composer
 
 
-##Install
+## Install
 
 * Copy the files to the webserver location (eg: /var/www/html/ticket-search/)
 * Run the command **composer install** on the ticket-search folder
