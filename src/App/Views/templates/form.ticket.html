@@ -1,0 +1,105 @@
+{% extends "default.html" %}
+{% block content %}
+<h1>Ticket Search</h1>
+<div class="container">
+    <div id="search" class="col-md-4 offset-md-4">
+        <div class="row input-group">
+            <span class="input-group-addon" id="basic-addon1">#</span>
+            <input type="text" id="search_ticket" class="form-control" placeholder="Número do chamado" aria-label="TicketNumber" aria-describedby="basic-addon1">
+            <button id="search_button" type="submit" class="btn btn-dark">Search</button>
+        </div>
+        </br>
+        
+    </div>
+</div>
+<br>
+{% block ticket_information %}
+<div id="ticket_information" class="container" style="background-color: #FFF">
+    <br>
+    {% if not ticket.teste and ticket %}
+    <div class="alert alert-danger" role="alert">
+        <strong>Nenhum chamado encontrado!</strong>
+    </div>
+    {% endif %}
+    <div id='tn'>
+        <h5><b>Número do chamado: {{ticket.id}}</b> - {{ticket.entities_id}}</h5>
+    </div>
+    <br>
+    <div class="row">
+        {% if ticket.date_creation %}
+        {% set date_creation = ticket.date_creation |date('d/m/Y H:i:s') %}
+        {% endif %}
+        {% if ticket.due_date %}
+        {% set time_to_own = ticket.due_date |date('d/m/Y H:i:s') %}
+        {% endif %}
+        {% if ticket.solvedate %}
+        {% set solution = ticket.solvedate |date('d/m/Y H:i:s') %}
+        {% endif %}
+        <div class="col-md-4">
+            <label for="data_abertura">Data de Abertura:</label>
+            <input class="form-control" id="data_abertura" type="datetime" placeholder="Data de Abertura" value="{{date_creation}}" disabled>
+        </div>
+        <div class="col-md-4">
+            <label for="tempo_solucao">Tempo para Solução:</label>
+            <input class="form-control" id="tempo_solucao" type="datetime" placeholder="Tempo para Solução" value="{{time_to_own}}" disabled>
+        </div>
+        <div class="col-md-4">
+            <label for="data_solucao">Data da Solução:</label>
+            <input class="form-control" id="data_solucao" type="datetime" placeholder="Data da Solução" value="{{solution}}" disabled>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            <label for="status">Status:</label>
+            <input class="form-control" id="status" type="text" placeholder="Status" value="{{ticket.status}}" disabled>
+        </div>
+        <div class="col-md-4">
+                <label for="categoria">Categoria:</label>
+                <input class="form-control" id="categoria" type="text" placeholder="Categoria" value="{{ticket.itilcategories_id}}" disabled>
+        </div>
+        <div class="col-md-4">
+                <label for="ticket_pai">Ticket Pai:</label>
+                <input class="form-control" id="ticket_pai" type="text" placeholder="Ticket Pai" value="{{ticket.pai}}" disabled>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            <label for="solicitante">Solicitante:</label>
+            <input class="form-control" id="solicitante" type="text" placeholder="Solicitante" value="{{ticket.requester}}" disabled>
+        </div>
+        <div class="col-md-4">
+            <label for="grupo_tecnico">Grupo Técnico:</label>
+            <input class="form-control" id="grupo_tecnico" type="text" placeholder="Grupo Técnico" value="{{ticket.group}}" disabled>
+        </div>
+        <div class="col-md-4">
+            <label for="tecnico">Técnico:</label>
+            <input class="form-control" id="tecnico" type="text" placeholder="Técnico" value="{{ticket.assigned}}" disabled>
+        </div>
+    </div>
+    <br>
+    <form>
+        <div class="form-group">
+            <label for="titulo">Título</label>
+            <input id="titulo" class="form-control" type="text" placeholder="Título" value="{{ticket.name}}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" class="form-control" placeholder="Descrição" rows="10" disabled>{{ticket.content}}</textarea>
+        </div>
+        {% if ticket.notes %}
+        {% for note in ticket.notes %}
+        <div class="form-group">
+            <label for="note" class="card-title">
+                Nota {{note.id}} {{note.date |date('d/m/Y H:i:s')}}
+            </label>
+            <textarea id="note" class="form-control" placeholder="Descrição" rows="3" disabled>{{note.content}}</textarea>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </form>
+    <br>
+</div>
+{% endblock ticket_information %}
+{% endblock %}
