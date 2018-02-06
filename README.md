@@ -4,8 +4,8 @@ To install, just put the files on a webserver page access
 
 ## Requirements
 
-* PHP 5.6 or greater
-* GLPI 9.1 ou greater
+* PHP >= 5.6 
+* GLPI >= 9.1
 * GLPI API Enabled
 * Composer
 
